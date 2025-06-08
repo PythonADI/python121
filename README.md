@@ -9,4 +9,4 @@
 ## Assignments
 1. [Assignment 1](https://classroom.github.com/a/EgsWxGsu)
 2. [Assignment 2](https://classroom.github.com/a/DMjOM7l4)
-3. [Assignment 3(https://classroom.github.com/a/FfQ9ZcZc)
+3. [Assignment 3](https://classroom.github.com/a/FfQ9ZcZc)
