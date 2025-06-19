@@ -11,3 +11,5 @@
 2. [Assignment 2](https://classroom.github.com/a/DMjOM7l4)
 3. [Assignment 3](https://classroom.github.com/a/FfQ9ZcZc)
 4. [Assignment 4](https://classroom.github.com/a/XeMTL_Yx)
+5. [Assignment 5](https://classroom.github.com/a/ElHT0Kw2)
+6. [Assignment 6](https://classroom.github.com/a/uQkUqkum)
