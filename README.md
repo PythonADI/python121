@@ -13,3 +13,5 @@
 4. [Assignment 4](https://classroom.github.com/a/XeMTL_Yx)
 5. [Assignment 5](https://classroom.github.com/a/ElHT0Kw2)
 6. [Assignment 6](https://classroom.github.com/a/uQkUqkum)
+7. [Assignment 7](https://classroom.github.com/a/_1QVAxbp)
+8. [Assignment 8](https://classroom.github.com/a/FgO-Dfsw)
