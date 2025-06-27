@@ -1,0 +1,5 @@
+Username: Luka
+Password: 77Chrest6777
+Email: test@gmail.com
+Age: 88
+Gender: {self.gender}
