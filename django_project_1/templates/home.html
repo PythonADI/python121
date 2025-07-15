@@ -7,8 +7,25 @@
 </head>
 <body>
 
+    <form method="post">
+        {% csrf_token %}
+        <button>Submit</button>
+    </form>
+
     <h1>Welcome to the Home Page</h1>
     <p>This is a simple Django application.</p>
+
+    <div>
+        <ul>
+        {% for question in latest_questions%}
+            <li>
+                <a href="{% url 'question_detail' question.id %}">
+                    {{ question.text }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    <div/>
     
 </body>
 </html>
