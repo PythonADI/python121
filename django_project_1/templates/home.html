@@ -17,7 +17,7 @@
 
     <div>
         <ul>
-        {% for question in latest_questions%}
+        {% for question in latest_questions %}
             <li>
                 <a href="{% url 'question_detail' question.id %}">
                     {{ question.text }}

@@ -6,6 +6,9 @@
     <title>{{ question.text }}</title>
 </head>
 <body>
+    {% if error_message %}
+        <div style="color: red;">{{ error_message }}</div>
+    {% endif %}
 
     <h3>{{ question.text }}</h3>
     <p>Question ID: {{ question.id }}</p>
@@ -15,6 +18,20 @@
         <li>{{ choice.text }}</li>
     {% endfor %}
     </ul>
+
+    <form method="post" action="{% url "vote" question.id %}">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Vote for your choice:</legend>
+            {% for choice in question.choice_set.all %}
+                <div>
+                    <input type="radio" id="choice_{{ choice.id }}" name="choice" value="{{ choice.id }}">
+                    <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <button>Submit Vote</button>
+    </form>
     
 </body>
 </html>
