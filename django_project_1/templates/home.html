@@ -1,31 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <form method="post">
-        {% csrf_token %}
-        <button>Submit</button>
-    </form>
+{% block title %}
+    Home - My Polls App
+{% endblock %}
 
-    <h1>Welcome to the Home Page</h1>
-    <p>This is a simple Django application.</p>
+{% block content %}
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>Welcome to My Polls App</h1>
+            <p>Discover interesting questions, share your opinions, and see what others think!</p>
+        </div>
+    </div>
 
-    <div>
-        <ul>
-        {% for question in latest_questions %}
-            <li>
-                <a href="{% url 'question_detail' question.id %}">
-                    {{ question.text }}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-    <div/>
-    
-</body>
-</html>
+    <!-- Latest Questions Section -->
+    <div class="container">
+        <div class="section">
+            <h2>📊 Latest Questions</h2>
+            {% if latest_questions %}
+                <div class="questions-grid">
+                    {% for question in latest_questions %}
+                        <a href="{% url 'question_detail' question.id %}" class="question-card">
+                            <div class="question-text">{{ question.text }}</div>
+                            <div class="question-meta">
+                                Question #{{ question.id }} • Click to vote
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>🤔 No questions yet</h3>
+                    <p>Be the first to create an interesting question for everyone to vote on!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

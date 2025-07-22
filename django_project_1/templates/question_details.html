@@ -1,37 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ question.text }}</title>
-</head>
-<body>
-    {% if error_message %}
-        <div style="color: red;">{{ error_message }}</div>
-    {% endif %}
+{% extends "base.html" %}
 
-    <h3>{{ question.text }}</h3>
-    <p>Question ID: {{ question.id }}</p>
+{% block title %}
+    {{ question.text }} - My Polls App
+{% endblock %}
 
-    <ul>
-    {% for choice in question.choice_set.all %}
-        <li>{{ choice.text }}</li>
-    {% endfor %}
-    </ul>
+{% block content %}
+<div class="container">
+    <div class="section">
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
 
-    <form method="post" action="{% url "vote" question.id %}">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Vote for your choice:</legend>
+        <h2>{{ question.text }}</h2>
+        <p class="question-id">Question #{{ question.id }}</p>
+
+        <div class="choices-list">
+            <h3>Available choices:</h3>
+            <ul>
             {% for choice in question.choice_set.all %}
-                <div>
-                    <input type="radio" id="choice_{{ choice.id }}" name="choice" value="{{ choice.id }}">
-                    <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
-                </div>
+                <li>{{ choice.text }}</li>
             {% endfor %}
-        </fieldset>
-        <button>Submit Vote</button>
-    </form>
+            </ul>
+        </div>
+
+        <form method="post" action="{% url "vote" question.id %}" class="vote-form">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Vote for your choice:</legend>
+                {% for choice in question.choice_set.all %}
+                    <div class="choice-option" onclick="selectChoice({{ choice.id }})">
+                        <input type="radio" id="choice_{{ choice.id }}" name="choice" value="{{ choice.id }}">
+                        <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <button type="submit" class="vote-button">Submit Vote</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function selectChoice(choiceId) {
+    // Remove selected class from all choice options
+    document.querySelectorAll('.choice-option').forEach(option => {
+        option.classList.remove('selected');
+    });
     
-</body>
-</html>
+    // Select the radio button
+    const radioButton = document.getElementById('choice_' + choiceId);
+    radioButton.checked = true;
+    
+    // Add selected class to the clicked option
+    radioButton.closest('.choice-option').classList.add('selected');
+}
+
+// Add event listeners for keyboard navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const radioButtons = document.querySelectorAll('input[type="radio"][name="choice"]');
+    
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Remove selected class from all options
+            document.querySelectorAll('.choice-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to the parent of the selected radio
+            if (this.checked) {
+                this.closest('.choice-option').classList.add('selected');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

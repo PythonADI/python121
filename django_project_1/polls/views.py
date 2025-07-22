@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
+from django.utils import timezone
 from polls.models import Question, Choice
 from django.db.models import F
 from django.views import generic
@@ -54,7 +55,7 @@ def vote_view(request, question_id): # 8:57:05
     selected_choice.votes = F("votes") + 1
     selected_choice.save()
 
-    return redirect("question_results", question_id=question.id)
+    return redirect("question_results", pk=question.id)
 
 
 class QuestionListView(generic.ListView):
@@ -62,7 +63,11 @@ class QuestionListView(generic.ListView):
     context_object_name = "latest_questions"
 
     def get_queryset(self):
-        return Question.objects.all().order_by("-created_at")[:5]
+        # 1B - 
+        return Question.objects.filter(
+                publication_date__gte=timezone.now() - timezone.timedelta(days=1),
+                publication_date__lte=timezone.now(),
+            ).order_by("-created_at")[:5]
 
 
 class QuestionDetailView(generic.DetailView):

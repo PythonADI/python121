@@ -1,22 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ question.text }}</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h3>{{ question.text }}</h3>
-    <p>Question ID: {{ question.id }}</p>
+{% block title %}
+    {{ question.text }} - Results
+{% endblock %}
 
-    <ul>
-    {% for choice in question.choice_set.all %}
-        <li>"{{ choice.text }}" has {{ choice.votes }} 
-            vote{{ choice.votes|pluralize }}.
-        </li>
-    {% endfor %}
-    </ul>
-    
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <div class="section">
+        <h2>{{ question.text }}</h2>
+        <p class="question-id">Question #{{ question.id }} - Results</p>
+
+        <div class="results-container">
+            {% for choice in question.choice_set.all %}
+                <div class="result-item">
+                    <div class="choice-text">"{{ choice.text }}"</div>
+                    <div class="vote-count">{{ choice.votes }} vote{{ choice.votes|pluralize }}</div>
+                    <div class="vote-bar">
+                        <div class="vote-progress" style="width: {% if choice.votes %}{{ choice.votes|floatformat:0 }}%{% else %}0%{% endif %}"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="back-link">
+            <a href="{% url 'question_detail' question.id %}" class="btn-back">← Back to Question</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
