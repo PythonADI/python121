@@ -11,8 +11,7 @@ def home_view(request):
         "home.html",
         {"latest_questions": latest_questions}
         )
-    
-    
+
 
 
 def question_detail_view(request, question_id):
